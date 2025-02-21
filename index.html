@@ -13,10 +13,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       color: #fff;
     }
     .container {
+      width: 90%;
+      max-width: 800px;
       text-align: center;
       padding: 40px;
       background: rgba(255, 255, 255, 0.15);
@@ -33,10 +35,14 @@
       font-size: 1.2em;
     }
     .audio-player {
-      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+    .audio-player h2 {
+      margin-bottom: 10px;
+      font-size: 1.5em;
     }
     .controls {
-      margin-top: 15px;
+      margin-top: 10px;
     }
     .controls button {
       background: #fff;
@@ -53,7 +59,8 @@
       background: #f0f0f0;
     }
     input[type="range"] {
-      width: 300px;
+      width: 80%;
+      max-width: 400px;
       margin-top: 15px;
     }
   </style>
@@ -61,53 +68,78 @@
 <body>
   <div class="container">
     <h1>Welcome</h1>
-    <p>Enjoy our audio experience.</p>
+    <p>Enjoy our curated audio experiences below.</p>
+    
     <div class="audio-player">
-      <audio id="audio" src="audio-file.mp3"></audio>
+      <h2>Audio 1</h2>
+      <audio id="audio1" src="audio1.mp3"></audio>
       <div class="controls">
-        <button id="play">Play</button>
-        <button id="pause">Pause</button>
-        <button id="restart">Restart</button>
+        <button data-target="audio1" class="play">Play</button>
+        <button data-target="audio1" class="pause">Pause</button>
+        <button data-target="audio1" class="restart">Restart</button>
       </div>
-      <input type="range" id="seek-bar" value="0">
+      <input type="range" id="seek-bar1" value="0">
+    </div>
+    
+    <div class="audio-player">
+      <h2>Audio 2</h2>
+      <audio id="audio2" src="audio2.mp3"></audio>
+      <div class="controls">
+        <button data-target="audio2" class="play">Play</button>
+        <button data-target="audio2" class="pause">Pause</button>
+        <button data-target="audio2" class="restart">Restart</button>
+      </div>
+      <input type="range" id="seek-bar2" value="0">
+    </div>
+    
+    <div class="audio-player">
+      <h2>Audio 3</h2>
+      <audio id="audio3" src="audio3.mp3"></audio>
+      <div class="controls">
+        <button data-target="audio3" class="play">Play</button>
+        <button data-target="audio3" class="pause">Pause</button>
+        <button data-target="audio3" class="restart">Restart</button>
+      </div>
+      <input type="range" id="seek-bar3" value="0">
     </div>
   </div>
   
   <script>
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('play');
-    const pauseBtn = document.getElementById('pause');
-    const restartBtn = document.getElementById('restart');
-    const seekBar = document.getElementById('seek-bar');
-
-    playBtn.addEventListener('click', () => {
-      audio.play();
-    });
-
-    pauseBtn.addEventListener('click', () => {
-      audio.pause();
-    });
-
-    restartBtn.addEventListener('click', () => {
-      audio.currentTime = 0;
-      audio.play();
-    });
-
-    // Update the seek bar as audio plays
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration) {
-        const value = (audio.currentTime / audio.duration) * 100;
-        seekBar.value = value;
-      }
-    });
-
-    // Seek audio when the seek bar value changes
-    seekBar.addEventListener('input', () => {
-      if (audio.duration) {
-        const time = (seekBar.value / 100) * audio.duration;
-        audio.currentTime = time;
-      }
-    });
+    function setupAudioPlayer(audioId, seekBarId) {
+      const audio = document.getElementById(audioId);
+      const seekBar = document.getElementById(seekBarId);
+      
+      document.querySelector(`button.play[data-target="${audioId}"]`).addEventListener('click', () => {
+        audio.play();
+      });
+      
+      document.querySelector(`button.pause[data-target="${audioId}"]`).addEventListener('click', () => {
+        audio.pause();
+      });
+      
+      document.querySelector(`button.restart[data-target="${audioId}"]`).addEventListener('click', () => {
+        audio.currentTime = 0;
+        audio.play();
+      });
+      
+      audio.addEventListener('timeupdate', () => {
+        if (audio.duration) {
+          const value = (audio.currentTime / audio.duration) * 100;
+          seekBar.value = value;
+        }
+      });
+      
+      seekBar.addEventListener('input', () => {
+        if (audio.duration) {
+          const time = (seekBar.value / 100) * audio.duration;
+          audio.currentTime = time;
+        }
+      });
+    }
+    
+    setupAudioPlayer('audio1', 'seek-bar1');
+    setupAudioPlayer('audio2', 'seek-bar2');
+    setupAudioPlayer('audio3', 'seek-bar3');
   </script>
 </body>
 </html>
