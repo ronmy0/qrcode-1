@@ -1,39 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegant Audio Player</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gorgeous Landing Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #FF7E5F, #FEB47B);
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+    }
+    .container {
+      text-align: center;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 3em;
+    }
+    p {
+      margin-bottom: 30px;
+      font-size: 1.2em;
+    }
+    .audio-player {
+      margin-top: 20px;
+    }
+    .controls {
+      margin-top: 15px;
+    }
+    .controls button {
+      background: #fff;
+      color: #FF7E5F;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .controls button:hover {
+      background: #f0f0f0;
+    }
+    input[type="range"] {
+      width: 300px;
+      margin-top: 15px;
+    }
+  </style>
 </head>
-<body class="flex items-center justify-center h-screen bg-gray-900">
-    <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-white text-center">
-        <h2 class="text-xl font-semibold mb-4">Audio Player</h2>
-        <audio id="audio" class="w-full" controls>
-            <source src="audio-file.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <input type="range" id="seekbar" class="w-full mt-4" min="0" max="100" value="0" step="1">
-        <div class="mt-4 flex justify-center gap-4">
-            <button onclick="playAudio()" class="px-4 py-2 bg-green-500 rounded-lg hover:bg-green-600">Play</button>
-            <button onclick="pauseAudio()" class="px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600">Pause</button>
-        </div>
+<body>
+  <div class="container">
+    <h1>Welcome</h1>
+    <p>Enjoy our audio experience.</p>
+    <div class="audio-player">
+      <audio id="audio" src="audio-file.mp3"></audio>
+      <div class="controls">
+        <button id="play">Play</button>
+        <button id="pause">Pause</button>
+        <button id="restart">Restart</button>
+      </div>
+      <input type="range" id="seek-bar" value="0">
     </div>
+  </div>
+  
+  <script>
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('play');
+    const pauseBtn = document.getElementById('pause');
+    const restartBtn = document.getElementById('restart');
+    const seekBar = document.getElementById('seek-bar');
 
-    <script>
-        const audio = document.getElementById('audio');
-        const seekbar = document.getElementById('seekbar');
+    playBtn.addEventListener('click', () => {
+      audio.play();
+    });
 
-        function playAudio() { audio.play(); }
-        function pauseAudio() { audio.pause(); }
+    pauseBtn.addEventListener('click', () => {
+      audio.pause();
+    });
 
-        audio.addEventListener('timeupdate', () => {
-            seekbar.value = (audio.currentTime / audio.duration) * 100;
-        });
+    restartBtn.addEventListener('click', () => {
+      audio.currentTime = 0;
+      audio.play();
+    });
 
-        seekbar.addEventListener('input', () => {
-            audio.currentTime = (seekbar.value / 100) * audio.duration;
-        });
-    </script>
+    // Update the seek bar as audio plays
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        const value = (audio.currentTime / audio.duration) * 100;
+        seekBar.value = value;
+      }
+    });
+
+    // Seek audio when the seek bar value changes
+    seekBar.addEventListener('input', () => {
+      if (audio.duration) {
+        const time = (seekBar.value / 100) * audio.duration;
+        audio.currentTime = time;
+      }
+    });
+  </script>
 </body>
 </html>
