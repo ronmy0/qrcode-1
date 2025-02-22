@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gorgeous Landing Page</title>
+  <title>Landing Page</title>
   <style>
     body {
       margin: 0;
@@ -64,10 +64,8 @@
     }
     .controls button {
       background: #fff;
-      color: #FF7E5F;
       border: none;
-      padding: 10px 20px;
-      font-size: 1em;
+      padding: 10px;
       border-radius: 5px;
       margin: 0 5px;
       cursor: pointer;
@@ -75,6 +73,10 @@
     }
     .controls button:hover {
       background: #f0f0f0;
+    }
+    .controls svg {
+      width: 24px;
+      height: 24px;
     }
     input[type="range"] {
       width: 80%;
@@ -101,8 +103,7 @@
         font-size: 1.2em;
       }
       .controls button {
-        padding: 8px 16px;
-        font-size: 0.9em;
+        padding: 8px;
         margin: 0 3px;
       }
       input[type="range"] {
@@ -113,22 +114,38 @@
 </head>
 <body>
   <div class="container">
-    <h1>Welcome</h1>
-    <p>Choose an audio experience to load and enjoy.</p>
+    <h1>Hello World!</h1>
+    <p>The Game.</p>
     
     <div class="audio-buttons">
-      <button class="load-audio" data-src="audio1.mp3" data-title="Audio 1">Audio 1</button>
-      <button class="load-audio" data-src="audio2.mp3" data-title="Audio 2">Audio 2</button>
-      <button class="load-audio" data-src="audio3.mp3" data-title="Audio 3">Audio 3</button>
+      <button class="load-audio" data-src="audio1.mp3" data-title="Audio 1">Bad Dreams</button>
+      <button class="load-audio" data-src="audio2.mp3" data-title="Audio 2">Drown</button>
+      <button class="load-audio" data-src="audio3.mp3" data-title="Audio 3">The Door</button>
     </div>
     
     <div class="audio-player" id="audio-player">
       <h2 id="audio-title"></h2>
       <audio id="audio"></audio>
       <div class="controls">
-        <button id="play">Play</button>
-        <button id="pause">Pause</button>
-        <button id="restart">Restart</button>
+        <button id="play">
+          <!-- Play Icon -->
+          <svg viewBox="0 0 24 24">
+            <polygon points="8,5 19,12 8,19" fill="#FF7E5F"/>
+          </svg>
+        </button>
+        <button id="pause">
+          <!-- Pause Icon -->
+          <svg viewBox="0 0 24 24">
+            <rect x="6" y="5" width="4" height="14" fill="#FF7E5F"/>
+            <rect x="14" y="5" width="4" height="14" fill="#FF7E5F"/>
+          </svg>
+        </button>
+        <button id="restart">
+          <!-- Restart/Refresh Icon -->
+          <svg viewBox="0 0 24 24">
+            <path d="M12 4V1L8 5l4 4V6c3.86 0 7 3.14 7 7 0 1.46-.45 2.83-1.21 3.97l1.45 1.45C20.15 16.3 21 14.23 21 12c0-4.97-4.03-9-9-9zM4.27 3L3 4.27l5 5C7.1 9.09 7 10.03 7 11c0 4.97 4.03 9 9 9v3l4-4-4-4v3c-3.86 0-7-3.14-7-7 0-1.09.22-2.12.62-3.06l-2.35-2.35L4.27 3z" fill="#FF7E5F"/>
+          </svg>
+        </button>
       </div>
       <input type="range" id="seek-bar" value="0">
     </div>
